@@ -7,7 +7,94 @@ const excelData = []; // Datos migrados a database.json. Se mantiene vacío por 
 // 2. INICIALIZACIÓN DE LA APLICACIÓN
 // ======================================================
 let matches = [];
-let localLogoMap = {}; // Índice de archivos locales (Generado por el servidor)
+// MAPA ESTÁTICO DE ESCUDOS (Generado para GitHub Pages)
+const localLogoMap = {
+    // PRIMERA DIVISION
+    "aldosivi": "img/PrimeraDivision/aldosivi.png",
+    "argentinos": "img/PrimeraDivision/argentinos.png",
+    "atletico tucuman": "img/PrimeraDivision/atleticotucuman.png",
+    "banfield": "img/PrimeraDivision/banfield.png",
+    "barracas": "img/PrimeraDivision/barracas.png",
+    "belgrano": "img/PrimeraDivision/belgrano.png",
+    "boca": "img/PrimeraDivision/boca.png",
+    "central cordoba": "img/PrimeraDivision/centralcordoba.png",
+    "defensa": "img/PrimeraDivision/defensa.png",
+    "estudiantes": "img/PrimeraDivision/estudiantes.png",
+    "estudiantes lp": "img/PrimeraDivision/estudiantes.png",
+    "estudiantes rc": "img/PrimeraDivision/estudiantesrc.png",
+    "gimnasia": "img/PrimeraDivision/gimnasia.png",
+    "gimnasia lp": "img/PrimeraDivision/gimnasia.png",
+    "gimnasia mendoza": "img/PrimeraDivision/gimnasiamendoza.png",
+    "huracan": "img/PrimeraDivision/huracan.png",
+    "independiente": "img/PrimeraDivision/independiente.png",
+    "independiente riv": "img/PrimeraDivision/independienteriv.png",
+    "instituto": "img/PrimeraDivision/instituto.png",
+    "lanus": "img/PrimeraDivision/lanus.png",
+    "newells": "img/PrimeraDivision/newells.png",
+    "platense": "img/PrimeraDivision/platense.png",
+    "racing": "img/PrimeraDivision/racing.png",
+    "riestra": "img/PrimeraDivision/riestra.png",
+    "river": "img/PrimeraDivision/river.png",
+    "rosario central": "img/PrimeraDivision/rosariocentral.png",
+    "san lorenzo": "img/PrimeraDivision/sanlorenzo.png",
+    "sarmiento": "img/PrimeraDivision/sarmiento.png",
+    "talleres": "img/PrimeraDivision/talleres.png",
+    "tigre": "img/PrimeraDivision/tigre.png",
+    "union": "img/PrimeraDivision/union.png",
+    "velez": "img/PrimeraDivision/velez.png",
+
+    // PRIMERA NACIONAL
+    "agropecuario": "img/primeranacional/agropecuario.png",
+    "all boys": "img/primeranacional/allboys.png",
+    "almagro": "img/primeranacional/almagro.png",
+    "almirante brown": "img/primeranacional/almirante.png",
+    "atlanta": "img/primeranacional/atlanta.png",
+    "atletico rafaela": "img/primeranacional/atleticorafaela.png",
+    "chacarita": "img/primeranacional/chacarita.png",
+    "chaco for ever": "img/primeranacional/chaco_for_ever.png",
+    "colon": "img/primeranacional/colon.png",
+    "defensores de belgrano": "img/primeranacional/defensores.png",
+    "deportivo maipu": "img/primeranacional/depmaipu.png",
+    "deportivo madryn": "img/primeranacional/deportivo_madryn.png",
+    "estudiantes ba": "img/primeranacional/estudiantes_ba.png",
+    "ferro": "img/primeranacional/ferro.png",
+    "gimnasia jujuy": "img/primeranacional/gimnasiajujuy.png",
+    "gimnasia y tiro": "img/primeranacional/gimnasia_y_tiro.png",
+    "godoy cruz": "img/primeranacional/godoycruz.png", 
+    "guemes": "img/primeranacional/guemes.png",
+    "los andes": "img/primeranacional/los_andes.png",
+    "mitre": "img/primeranacional/mitre.png",
+    "moron": "img/primeranacional/moron.png",
+    "nueva chicago": "img/primeranacional/nueva_chicago.png",
+    "patronato": "img/primeranacional/patronato.png",
+    "quilmes": "img/primeranacional/quilmes.png",
+    "racing cordoba": "img/primeranacional/racing_cordoba.png",
+    "san martin sj": "img/primeranacional/sanmartinsj.png",
+    "san martin tuc": "img/primeranacional/sanmartintuc.png",
+    "san miguel": "img/primeranacional/sanmiguel.png",
+    "san telmo": "img/primeranacional/santelmo.png",
+    "temperley": "img/primeranacional/temperley.png",
+    "tristan suarez": "img/primeranacional/tristansuarez.png",
+
+    // FEDERAL A Y OTROS
+    "olimpo": "img/federala/olimpo.png",
+    "villa mitre": "img/federala/villa_mitre.png",
+    "sol de america": "img/federala/sol_de_america.png",
+    "9 de julio": "img/federala/9_de_julio.png",
+    "crucero del norte": "img/federala/crucero_del_norte.png",
+    "boca unidos": "img/federala/boca_unidos.png",
+    "juventud antoniana": "img/federala/juventud_antoniana.png",
+
+    // EXTRANJEROS Y OTROS (Agregados según tu lista)
+    "nacional": "img/primeradivisionuruguay/nacional.png",
+    "peñarol": "img/primeradivisionuruguay/penarol.png",
+    "universidad catolica": "img/serieaecuador/universidadcatolica.png",
+    "union la calera": "img/primeradivisionchile/unionlacalera.png",
+    "santos": "img/serieabrasil/santos.png",
+    "flamengo": "img/serieabrasil/flamengo.png",
+    "palmeiras": "img/serieabrasil/palmeiras.png",
+    "independiente del valle": "img/serieaecuador/independientedv.png"
+};
 let squads = []; // Datos de planteles históricos
 let cupModeState = JSON.parse(localStorage.getItem('banfield_cupModeState')) || {}; // Estado de visualización (Puntos vs Eficacia)
 
@@ -299,35 +386,27 @@ async function fetchWikipediaLogo(teamName, targetInput) {
     }
 }
 
-function getLogo(teamName, customLogo) {
-    if (!teamName) return "img/default.png";
+function getLogoPath(teamName) {
+    if (!teamName) return 'img/default.png';
+    
+    
+    const normalized = teamName.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") 
+        .replace(/\./g, "") 
+        .trim();
 
-    // 1. Prioridad: Escudo personalizado (URL absoluta o base64)
-    if (customLogo && customLogo.trim() !== '') {
-        if (customLogo.startsWith('http') || customLogo.startsWith('data:') || customLogo.startsWith('//')) {
-            return customLogo;
-        }
-        // Si es un nombre de archivo manual (ej: "mifoto.png"), asumimos ruta img/
-        return `img/${customLogo}`;
+
+    if (localLogoMap[normalized]) {
+        return localLogoMap[normalized];
+    }
+    
+
+    const shortName = normalized.split(' ')[0];
+    if (localLogoMap[shortName]) {
+        return localLogoMap[shortName];
     }
 
-    // 2. Normalizar nombre para búsqueda en mapa local
-    let clean = teamName.toLowerCase().trim();
-    if (logoAliases[clean]) {
-        clean = logoAliases[clean];
-        if (clean.startsWith('http')) return clean;
-    }
-
-    // Generar clave de mapa
-    const mapKey = clean.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
-
-    // 3. Buscar en el mapa indexado por el servidor
-    if (localLogoMap && localLogoMap[mapKey]) {
-        return localLogoMap[mapKey];
-    }
-
-    // 4. Fallback: intentar ruta plana estándar
-    return `img/${mapKey}.png`;
+    return `img/PrimeraDivision/${shortName}.png`;
 }
 
 function formatDate(s) {
