@@ -9,91 +9,110 @@ const excelData = []; // Datos migrados a database.json. Se mantiene vacío por 
 let matches = [];
 // MAPA ESTÁTICO DE ESCUDOS (Generado para GitHub Pages)
 const localLogoMap = {
-    // PRIMERA DIVISION
+    // === PRIMERA DIVISIÓN ===
     "aldosivi": "img/PrimeraDivision/aldosivi.png",
     "argentinos": "img/PrimeraDivision/argentinos.png",
     "atletico tucuman": "img/PrimeraDivision/atleticotucuman.png",
+    "atl tucuman": "img/PrimeraDivision/atleticotucuman.png",
     "banfield": "img/PrimeraDivision/banfield.png",
     "barracas": "img/PrimeraDivision/barracas.png",
+    "barracas central": "img/PrimeraDivision/barracas.png",
     "belgrano": "img/PrimeraDivision/belgrano.png",
     "boca": "img/PrimeraDivision/boca.png",
+    "boca juniors": "img/PrimeraDivision/boca.png",
     "central cordoba": "img/PrimeraDivision/centralcordoba.png",
+    "central cba": "img/PrimeraDivision/centralcordoba.png", // Abreviatura común
+    "central": "img/PrimeraDivision/centralcordoba.png",      // Por si toma solo la primera palabra
     "defensa": "img/PrimeraDivision/defensa.png",
+    "def y justicia": "img/PrimeraDivision/defensa.png",
     "estudiantes": "img/PrimeraDivision/estudiantes.png",
     "estudiantes lp": "img/PrimeraDivision/estudiantes.png",
-    "estudiantes rc": "img/PrimeraDivision/estudiantesrc.png",
     "gimnasia": "img/PrimeraDivision/gimnasia.png",
     "gimnasia lp": "img/PrimeraDivision/gimnasia.png",
-    "gimnasia mendoza": "img/PrimeraDivision/gimnasiamendoza.png",
     "huracan": "img/PrimeraDivision/huracan.png",
     "independiente": "img/PrimeraDivision/independiente.png",
-    "independiente riv": "img/PrimeraDivision/independienteriv.png",
     "instituto": "img/PrimeraDivision/instituto.png",
     "lanus": "img/PrimeraDivision/lanus.png",
     "newells": "img/PrimeraDivision/newells.png",
     "platense": "img/PrimeraDivision/platense.png",
     "racing": "img/PrimeraDivision/racing.png",
     "riestra": "img/PrimeraDivision/riestra.png",
+    "dep riestra": "img/PrimeraDivision/riestra.png",
     "river": "img/PrimeraDivision/river.png",
+    "river plate": "img/PrimeraDivision/river.png",
     "rosario central": "img/PrimeraDivision/rosariocentral.png",
     "san lorenzo": "img/PrimeraDivision/sanlorenzo.png",
+    "san": "img/PrimeraDivision/sanlorenzo.png", // Caso borde para "San Lorenzo"
     "sarmiento": "img/PrimeraDivision/sarmiento.png",
     "talleres": "img/PrimeraDivision/talleres.png",
     "tigre": "img/PrimeraDivision/tigre.png",
     "union": "img/PrimeraDivision/union.png",
     "velez": "img/PrimeraDivision/velez.png",
+    
+    // === CASOS QUE DABAN ERROR 404 (SOLUCIONADOS) ===
+    "ind": "img/PrimeraDivision/independiente.png",          // Para "Ind. Rivadavia" o "Independiente"
+    "ind rivadavia": "img/PrimeraDivision/independienteriv.png",
+    "ind del valle": "img/serieaecuador/independientedv.png",
+    
+    "real": "img/primerab/realpilar.png",                    // Para "Real Pilar"
+    "real pilar": "img/primerab/realpilar.png",
+    
+    "def": "img/primeranacional/defensores.png",             // Para "Def. de Belgrano"
+    "def belgrano": "img/primeranacional/defensores.png",
+    "def de belgrano": "img/primeranacional/defensores.png",
+    
+    "dock": "img/primerab/dock_sud.png",                     // Para "Dock Sud"
+    "dock sud": "img/primerab/dock_sud.png",
+    
+    "juv": "img/federala/juventud_antoniana.png",            // Para "Juv. Antoniana" o "Unida"
+    "juventud antoniana": "img/federala/juventud_antoniana.png",
+    "juventud unida": "img/primerac/juventudunida.png",
+    
+    "atl": "img/PrimeraDivision/atleticotucuman.png",        // Genérico para Atléticos si falla
+    "atl rafaela": "img/primeranacional/atleticorafaela.png",
+    "atl brown": "img/primeranacional/almirante.png",        // (Verificar cuál Brown es)
 
-    // PRIMERA NACIONAL
+    "gral": "img/primerac/lamadrid.png",                     // Para "Gral. Lamadrid"
+    "gral lamadrid": "img/primerac/lamadrid.png",
+    "lamadrid": "img/primerac/lamadrid.png",
+
+    "arg": "img/primerab/argquilmes.png",                    // Para "Arg. de Quilmes"
+    "arg de quilmes": "img/primerab/argquilmes.png",
+    "arg de merlo": "img/primerab/argentinomerlo.png",
+
+    "arsenal": "img/primerab/arsenal.png",                   // Estaba buscando en Primera, está en la B
+
+    "u": "img/primeradivisionchile/udechile.png",            // Para "U. de Chile" o Católica
+    "u de chile": "img/primeradivisionchile/udechile.png",
+    "u catolica": "img/serieaecuador/universidadcatolica.png", 
+
+    "dep": "img/primeranacional/deportivo_madryn.png",       // Genérico para "Dep."
+    "dep maipu": "img/primeranacional/depmaipu.png",
+    "dep madryn": "img/primeranacional/deportivo_madryn.png",
+    "dep armenio": "img/primerab/armenio.png",
+    "dep español": "img/primerac/depespanol.png",
+
+    "bolivar": "img/federala/ciudad_bolivar.png",            // Para "Ciudad de Bolivar"
+    "ciudad de bolivar": "img/federala/ciudad_bolivar.png",
+    
+    // === OTROS DEL ASCENSO ===
     "agropecuario": "img/primeranacional/agropecuario.png",
     "all boys": "img/primeranacional/allboys.png",
     "almagro": "img/primeranacional/almagro.png",
     "almirante brown": "img/primeranacional/almirante.png",
     "atlanta": "img/primeranacional/atlanta.png",
-    "atletico rafaela": "img/primeranacional/atleticorafaela.png",
     "chacarita": "img/primeranacional/chacarita.png",
     "chaco for ever": "img/primeranacional/chaco_for_ever.png",
     "colon": "img/primeranacional/colon.png",
-    "defensores de belgrano": "img/primeranacional/defensores.png",
-    "deportivo maipu": "img/primeranacional/depmaipu.png",
-    "deportivo madryn": "img/primeranacional/deportivo_madryn.png",
-    "estudiantes ba": "img/primeranacional/estudiantes_ba.png",
     "ferro": "img/primeranacional/ferro.png",
-    "gimnasia jujuy": "img/primeranacional/gimnasiajujuy.png",
-    "gimnasia y tiro": "img/primeranacional/gimnasia_y_tiro.png",
-    "godoy cruz": "img/primeranacional/godoycruz.png", 
-    "guemes": "img/primeranacional/guemes.png",
-    "los andes": "img/primeranacional/los_andes.png",
-    "mitre": "img/primeranacional/mitre.png",
-    "moron": "img/primeranacional/moron.png",
-    "nueva chicago": "img/primeranacional/nueva_chicago.png",
-    "patronato": "img/primeranacional/patronato.png",
     "quilmes": "img/primeranacional/quilmes.png",
-    "racing cordoba": "img/primeranacional/racing_cordoba.png",
     "san martin sj": "img/primeranacional/sanmartinsj.png",
-    "san martin tuc": "img/primeranacional/sanmartintuc.png",
+    "san martin t": "img/primeranacional/sanmartintuc.png",
     "san miguel": "img/primeranacional/sanmiguel.png",
-    "san telmo": "img/primeranacional/santelmo.png",
+    "patronato": "img/primeranacional/patronato.png",
     "temperley": "img/primeranacional/temperley.png",
-    "tristan suarez": "img/primeranacional/tristansuarez.png",
-
-    // FEDERAL A Y OTROS
-    "olimpo": "img/federala/olimpo.png",
     "villa mitre": "img/federala/villa_mitre.png",
-    "sol de america": "img/federala/sol_de_america.png",
-    "9 de julio": "img/federala/9_de_julio.png",
-    "crucero del norte": "img/federala/crucero_del_norte.png",
-    "boca unidos": "img/federala/boca_unidos.png",
-    "juventud antoniana": "img/federala/juventud_antoniana.png",
-
-    // EXTRANJEROS Y OTROS (Agregados según tu lista)
-    "nacional": "img/primeradivisionuruguay/nacional.png",
-    "peñarol": "img/primeradivisionuruguay/penarol.png",
-    "universidad catolica": "img/serieaecuador/universidadcatolica.png",
-    "union la calera": "img/primeradivisionchile/unionlacalera.png",
-    "santos": "img/serieabrasil/santos.png",
-    "flamengo": "img/serieabrasil/flamengo.png",
-    "palmeiras": "img/serieabrasil/palmeiras.png",
-    "independiente del valle": "img/serieaecuador/independientedv.png"
+    "olimpo": "img/federala/olimpo.png"
 };
 let squads = []; // Datos de planteles históricos
 let cupModeState = JSON.parse(localStorage.getItem('banfield_cupModeState')) || {}; // Estado de visualización (Puntos vs Eficacia)
