@@ -94,6 +94,26 @@ const localLogoMap = {
 
     "bolivar": "img/federala/ciudad_bolivar.png",            // Para "Ciudad de Bolivar"
     "ciudad de bolivar": "img/federala/ciudad_bolivar.png",
+
+    "godoy": "img/primeranacional/godoycruz.png",
+    "godoy cruz": "img/primeranacional/godoycruz.png",
+    
+    "nueva": "img/primeranacional/nueva_chicago.png",
+    "nueva chicago": "img/primeranacional/nueva_chicago.png",
+    
+    "sol": "img/federala/sol_de_america.png",
+    "sol de america": "img/federala/sol_de_america.png",
+    
+    "crucero": "img/federala/crucero_del_norte.png",
+    "crucero del norte": "img/federala/crucero_del_norte.png",
+    
+    "guemes": "img/primeranacional/guemes.png",
+    "guemes sde": "img/primeranacional/guemes.png",
+    
+    "santos": "img/serieabrasil/santos.png",
+    
+    "nacional": "img/primeradivisionuruguay/nacional.png",
+    "club nacional": "img/primeradivisionuruguay/nacional.png",
     
     // === OTROS DEL ASCENSO ===
     "agropecuario": "img/primeranacional/agropecuario.png",
@@ -113,6 +133,8 @@ const localLogoMap = {
     "temperley": "img/primeranacional/temperley.png",
     "villa mitre": "img/federala/villa_mitre.png",
     "olimpo": "img/federala/olimpo.png"
+
+    
 };
 let squads = []; // Datos de planteles históricos
 let cupModeState = JSON.parse(localStorage.getItem('banfield_cupModeState')) || {}; // Estado de visualización (Puntos vs Eficacia)
@@ -726,38 +748,51 @@ function toggleDetails(rowId, btn) {
 // ======================================================
 // 5. GESTIÓN DE MODAL (Edición y Creación)
 // ======================================================
+// ======================================================
+// 5. GESTIÓN DEL FORMULARIO Y GUARDADO (MODO GITHUB PAGES)
+// ======================================================
 const modal = document.getElementById('modal');
 const form = document.getElementById('matchForm');
 
 function openModal() {
     if (form) form.reset();
-    document.getElementById('matchId').value = '';
-    document.getElementById('modalTitle').innerText = 'Nuevo Partido';
+    const idField = document.getElementById('matchId');
+    if (idField) idField.value = '';
+    
+    const title = document.getElementById('modalTitle');
+    if (title) title.innerText = 'Nuevo Partido';
+    
     if (modal) modal.style.display = 'flex';
 }
 
-function closeModal() { if (modal) modal.style.display = 'none'; }
+function closeModal() { 
+    if (modal) modal.style.display = 'none'; 
+}
 
 function editMatch(id) {
     const m = matches.find(x => x.id === id);
     if (m) {
-        document.getElementById('matchId').value = m.id;
-        document.getElementById('inputDate').value = m.date;
-        document.getElementById('inputStage').value = m.stage || '';
-        document.getElementById('inputLocal').value = m.local;
-        document.getElementById('inputVisitor').value = m.visitor;
-        document.getElementById('inputScore').value = m.score;
-        document.getElementById('inputTourney').value = m.tourney;
-        document.getElementById('inputCoach').value = m.coach || '';
-        document.getElementById('inputStadium').value = m.stadium || '';
+        // Llenar campos si existen
+        const setVal = (id, val) => {
+            const el = document.getElementById(id);
+            if (el) el.value = val;
+        };
 
-        const logoLocalInput = document.getElementById('inputLogoLocal');
-        if (logoLocalInput) logoLocalInput.value = m.customLogoLocal || '';
+        setVal('matchId', m.id);
+        setVal('inputDate', m.date);
+        setVal('inputStage', m.stage || '');
+        setVal('inputLocal', m.local);
+        setVal('inputVisitor', m.visitor);
+        setVal('inputScore', m.score);
+        setVal('inputTourney', m.tourney);
+        setVal('inputCoach', m.coach || '');
+        setVal('inputStadium', m.stadium || '');
+        setVal('inputLogoLocal', m.customLogoLocal || '');
+        setVal('inputLogoVisitor', m.customLogoVisitor || '');
 
-        const logoVisInput = document.getElementById('inputLogoVisitor');
-        if (logoVisInput) logoVisInput.value = m.customLogoVisitor || '';
-
-        document.getElementById('modalTitle').innerText = 'Editar Partido';
+        const title = document.getElementById('modalTitle');
+        if (title) title.innerText = 'Editar Partido';
+        
         if (modal) modal.style.display = 'flex';
     }
 }
@@ -772,73 +807,85 @@ function delMatch(id) {
 if (form) {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const id = document.getElementById('matchId').value;
-        const logoLocalInput = document.getElementById('inputLogoLocal');
-        const logoVisInput = document.getElementById('inputLogoVisitor');
+        const idInput = document.getElementById('matchId');
+        const id = idInput ? idInput.value : null;
+
+        // Helper para obtener valor seguro
+        const getVal = (id) => {
+            const el = document.getElementById(id);
+            return el ? el.value : '';
+        };
 
         const data = {
             id: id ? parseInt(id) : Date.now(),
-            date: document.getElementById('inputDate').value,
-            stage: document.getElementById('inputStage').value,
-            local: document.getElementById('inputLocal').value,
-            visitor: document.getElementById('inputVisitor').value,
-            score: document.getElementById('inputScore').value,
-            tourney: document.getElementById('inputTourney').value,
-            coach: document.getElementById('inputCoach').value,
-            stadium: document.getElementById('inputStadium').value,
-            customLogoLocal: logoLocalInput ? logoLocalInput.value : '',
-            customLogoVisitor: logoVisInput ? logoVisInput.value : ''
+            date: getVal('inputDate'),
+            stage: getVal('inputStage'),
+            local: getVal('inputLocal'),
+            visitor: getVal('inputVisitor'),
+            score: getVal('inputScore'),
+            tourney: getVal('inputTourney'),
+            coach: getVal('inputCoach'),
+            stadium: getVal('inputStadium'),
+            customLogoLocal: getVal('inputLogoLocal'),
+            customLogoVisitor: getVal('inputLogoVisitor')
         };
 
         if (id) {
             const idx = matches.findIndex(x => x.id == id);
+            if (idx !== -1) {
+                // Verificar cambio de estadio para actualización masiva
+                const oldStadium = matches[idx].stadium;
+                const newStadium = data.stadium;
 
-            // Verificar cambio de estadio para actualización masiva
-            const oldStadium = matches[idx].stadium;
-            const newStadium = data.stadium;
+                matches[idx] = data;
 
-            matches[idx] = data;
-
-            if (oldStadium && oldStadium !== newStadium && newStadium) {
-                if (confirm(`Se detectó un cambio de estadio de "${oldStadium}" a "${newStadium}".\n\n[ACEPTAR] = Actualizar TODOS los partidos con este estadio.\n[CANCELAR] = Actualizar SOLO este partido.`)) {
-                    let count = 0;
-                    matches.forEach(m => {
-                        if (m.stadium === oldStadium) {
-                            m.stadium = newStadium;
-                            count++;
-                        }
-                    });
-                    if (count > 0) alert(`Se actualizaron otros ${count} partidos.`);
+                if (oldStadium && oldStadium !== newStadium && newStadium) {
+                    if (confirm(`Se detectó un cambio de estadio de "${oldStadium}" a "${newStadium}".\n\n[ACEPTAR] = Actualizar TODOS los partidos con este estadio.\n[CANCELAR] = Actualizar SOLO este partido.`)) {
+                        let count = 0;
+                        matches.forEach(m => {
+                            if (m.stadium === oldStadium) {
+                                m.stadium = newStadium;
+                                count++;
+                            }
+                        });
+                        if (count > 0) alert(`Se actualizaron otros ${count} partidos.`);
+                    }
                 }
             }
         } else {
             matches.push(data);
         }
+        
         save();
         closeModal();
     });
 }
 
 function save(silent = false) {
-    // 1. Guardar en LocalStorage (Backup rápido)
-    localStorage.setItem('banfieldDB_v2', JSON.stringify(matches));
+    // 1. Guardar en LocalStorage (Solo visible en tu navegador)
+    try {
+        localStorage.setItem('banfieldDB_v2', JSON.stringify(matches));
+        if (!silent) console.log("💾 Guardado en LocalStorage.");
+    } catch (e) {
+        console.error("Error guardando en LocalStorage", e);
+    }
 
-    // 2. Guardar en Servidor (Persistencia real)
-    fetch('/api/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ matches: matches, squads: [] })
-    })
-        .then(r => r.json())
-        .then(data => {
-            if (!silent) console.log("💾 Sincronización con el servidor completada.");
-        })
-        .catch(e => console.error("Error guardando en servidor:", e));
-
+    // 2. Renderizar tabla
     renderTables();
-    renderAverageTable();
-}
+    
+    // 3. Renderizar promedios (Solo si la función existe para evitar crash)
+    if (typeof renderAverageTable === "function") {
+        renderAverageTable();
+    }
 
+    // 4. AVISO PARA GITHUB PAGES
+    if (!silent) {
+        // Pequeño timeout para que el modal se cierre visualmente antes del alert
+        setTimeout(() => {
+            alert("✅ Cambio guardado en TU navegador.\n\n⚠️ RECORDATORIO: Estás en GitHub Pages (solo lectura).\nPara hacer este cambio permanente para todos, debes agregar manualmente los datos al archivo 'database.json' en tu código.");
+        }, 100);
+    }
+}
 // ======================================================
 // 6. HISTORIA Y CRONOLOGÍA
 // ======================================================
