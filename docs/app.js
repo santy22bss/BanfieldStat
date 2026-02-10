@@ -16,33 +16,32 @@ let cupModeState = JSON.parse(localStorage.getItem('banfield_cupModeState')) || 
  * Carga datos del servidor, configura autocompletado y renderiza la UI.
  */
 function initApp() {
-    console.log("🚀 Iniciando Banfield Stats...");
+    console.log("🚀 Iniciando Banfield Stats (Modo GitHub Pages)...");
 
-    // Cargar sugerencias de competencias desde la API
-    loadCompetitions();
+    
 
-    // 1. Intentar cargar datos desde el servidor (Fuente de Verdad)
-    // Se añade timestamp para evitar caché del navegador
-    fetch('/api/data?t=' + Date.now())
-        .then(r => r.json())
+    
+    fetch('./database.json') 
+        .then(r => {
+            if (!r.ok) throw new Error("No se encontró database.json");
+            return r.json();
+        })
         .then(serverData => {
-            if (serverData && serverData.matches && serverData.matches.length > 0) {
-                console.log("✅ Datos cargados del servidor:", serverData.matches.length, "partidos.");
-                matches = serverData.matches;
+            // Verificamos si los partidos vienen en .matches o directo en el objeto
+            const partidosCargados = serverData.matches || serverData;
+
+            if (partidosCargados && partidosCargados.length > 0) {
+                console.log("✅ Datos cargados de database.json:", partidosCargados.length, "partidos.");
+                matches = partidosCargados;
             } else {
-                console.log("⚠️ Servidor vacío o sin datos. Usando LocalStorage como respaldo.");
-                // Fallback: Usar LocalStorage si el servidor falla o está vacío
+                console.log("⚠️ JSON vacío. Usando LocalStorage como respaldo.");
                 const stored = localStorage.getItem('banfieldDB_v2');
-                if (stored) {
-                    matches = JSON.parse(stored);
-                } else {
-                    matches = [];
-                }
+                matches = stored ? JSON.parse(stored) : [];
             }
             proceedWithInit();
         })
         .catch(e => {
-            console.warn("⚠️ Error al conectar con API /api/data. Usando respaldo local.", e);
+            console.warn("⚠️ Error cargando database.json. Usando respaldo local.", e);
             try {
                 const stored = localStorage.getItem('banfieldDB_v2');
                 matches = stored ? JSON.parse(stored) : [];
@@ -56,26 +55,26 @@ function initApp() {
         // Renderizado inicial de componentes
         if (document.getElementById('tablesContainer')) renderTables();
         if (document.getElementById('timelineList')) renderHistory();
-        setupStadiumAutofill();
-        setupLogoAutofill();
-
-        // migrateStadiums(); // DESHABILITADO: Evita sobrescribir ediciones manuales de estadios.
-
+        
+        
+        if (typeof setupStadiumAutofill === "function") setupStadiumAutofill();
+        if (typeof setupLogoAutofill === "function") setupLogoAutofill();
+        
         // Verificación proactiva de escudos faltantes
-        setTimeout(checkMissingLogosPrompt, 1000);
+        if (typeof checkMissingLogosPrompt === "function") setTimeout(checkMissingLogosPrompt, 1000);
     }
 
-    // Carga asíncrona del mapa de logos
+    // EL MAPA DE LOGOS NO FUNCIONA EN GITHUB PAGES (REQUIERE SERVIDOR)
+    //
+    /*
     fetch('/api/logo-map')
         .then(r => r.json())
         .then(map => {
-            console.log("✅ Mapa de logos cargado:", Object.keys(map).length, "archivos encontrados.");
             localLogoMap = map;
-            renderTables(); // Re-renderizar para aplicar los logos encontrados
+            renderTables();
         })
-        .catch(e => {
-            console.warn("⚠️ No se pudo cargar el mapa de logos (usando rutas estándar):", e);
-        });
+        .catch(e => console.warn("Modo estático: No se carga mapa de logos dinámico."));
+    */
 }
 
 
