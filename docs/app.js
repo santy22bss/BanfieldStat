@@ -504,8 +504,6 @@ function renderTables() {
         let globalW = 0, globalD = 0, globalL = 0, globalPts = 0;
 
         filteredMatches.forEach(m => {
-            const logoLocal = getLogoPath(m.local);
-            const logoVisitor = getLogoPath(m.visitor);
             const res = getResult(m);
             if (res.type === 'win') globalW++;
             if (res.type === 'draw') globalD++;
@@ -630,10 +628,9 @@ function renderTables() {
             const res = getResult(m);
             const resClass = res.type;
             const isBanfieldLocal = m.local.toLowerCase().includes('banfield');
-
-            const logo = getLogoPath(m.local);
+            const logoLocal = getLogoPath(m.local);
             const logoVisitor = getLogoPath(m.visitor);
-
+            
             tableHTML += `
                 <tr class="match-row ${resClass}">
                     <td class="text-center">${formatDate(m.date)}</td>
