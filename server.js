@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // --- ARCHIVOS ESTÁTICOS ---
 // Servir contenido estático desde el directorio 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'docs')));
 
 // --- BASE DE DATOS (Persistencia Local) ---
 let db = { matches: [], squads: [] };
