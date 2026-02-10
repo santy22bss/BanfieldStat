@@ -45,6 +45,7 @@ IDE: Google Antigravity (IA-Driven)
 Persistencia: JSON (database.json, competitions.json)
 
 * Instalación y Uso
+
 Clona el repositorio:
 
 Bash
@@ -62,4 +63,5 @@ node server.js
 Esta herramienta utiliza scripts de automatización para la gestión de archivos locales y descarga de recursos. Aunque ha sido diseñada siguiendo prácticas de desarrollo seguro, el autor no se hace responsable por el uso indebido de los scripts de extracción o la integridad de los datos si se modifican manualmente los archivos JSON. Úsalo bajo tu propio riesgo.
 
 Desarrollado por Santiago Moyano.
+
 
