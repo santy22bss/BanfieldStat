@@ -1,4 +1,5 @@
-* Banfield Stats
+Banfield Stats
+
 Es una aplicación web integral diseñada para centralizar, visualizar y analizar el historial de partidos del Club Atlético Banfield en una interfaz moderna y eficiente.
 
 * Contexto del Proyecto
@@ -15,11 +16,9 @@ Nota: Este es un proyecto de desarrollo personal con fines educativos y de optim
 * Características Principales
 La aplicación se divide en tres pilares fundamentales:
 
-- Visualización de Datos: Interfaz dinámica para la consulta de historial de partidos, promedios de puntos y estadísticas históricas detalladas (history.html, promedios.html).
+- Visualización de Datos: Interfaz dinámica para la consulta de historial de partidos, equipos históricos (history.html).
 
 - Gestión Inteligente de Datos: * Extracción: Scripts automatizados para la obtención de competencias y logos (extract_competitions.js, download_logo.js).
-
-Sincronización: Herramientas de sincronización forzada e importación masiva de datos históricos (force_sync.js, import_2014.js).
 
 Debug: Mapeo y cálculo de errores en la base de datos para garantizar la precisión estadística.
 
@@ -45,8 +44,6 @@ IDE: Google Antigravity (IA-Driven)
 
 Persistencia: JSON (database.json, competitions.json)
 
-Scripts de Automatización: Batch (inicar.bat)
-
 * Instalación y Uso
 Clona el repositorio:
 
@@ -60,7 +57,9 @@ Ejecución rápida: Inicia la aplicación ejecutando el archivo inicar.bat o med
 
 Bash
 node server.js
+
 * Aviso Legal (Disclaimer)
 Esta herramienta utiliza scripts de automatización para la gestión de archivos locales y descarga de recursos. Aunque ha sido diseñada siguiendo prácticas de desarrollo seguro, el autor no se hace responsable por el uso indebido de los scripts de extracción o la integridad de los datos si se modifican manualmente los archivos JSON. Úsalo bajo tu propio riesgo.
 
 Desarrollado por Santiago Moyano.
+
