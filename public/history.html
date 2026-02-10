@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia - Banfield</title>
+    <link rel="icon" href="img/banfield.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="shield">
+                <img src="img/banfield.png" class="shield-logo" alt="Escudo Banfield">
+            </span>
+            <div>
+                <h1>BANFIELD</h1>
+                <small>Archivo Histórico</small>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-futbol"></i> Partidos</a>
+            <a href="history.html" class="active"><i class="fas fa-history"></i> Historia</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+
+        <div class="history-toolbar">
+            <button class="btn-add" onclick="openHistoryModal()">
+                <i class="fas fa-plus-circle"></i> Agregar Hito Histórico
+            </button>
+        </div>
+
+        <div class="history-header" style="text-align:center; margin-bottom:40px;">
+            <h2 style="color:var(--green); text-transform:uppercase;">Galería de Planteles</h2>
+            <p>Recorrido por los equipos del Taladro (1896 - Hoy)</p>
+        </div>
+
+        <div id="timelineList" class="timeline"></div>
+
+    </div>
+
+    <!-- MODAL HISTORIA -->
+    <div id="modalHistory" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nuevo Hito Histórico</h2>
+                <button class="close-btn" onclick="closeHistoryModal()">&times;</button>
+            </div>
+            <form id="historyForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Año</label>
+                        <input type="number" id="histYear" required placeholder="Ej: 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Título / Hito</label>
+                        <input type="text" id="histTitle" required placeholder="Ej: Campeón de América">
+                    </div>
+                    <div class="form-group">
+                        <label>Director Técnico</label>
+                        <input type="text" id="histCoach" placeholder="Ej: Falcioni">
+                    </div>
+                    <div class="form-group">
+                        <label>Imagen (URL o Archivo)</label>
+                        <input type="text" id="histImage" placeholder="img/plantel2026.jpg">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Descripción / Jugadores</label>
+                        <textarea id="histPlayers" rows="4"
+                            style="width:100%; padding:10px; border:1px solid var(--border-color); border-radius:8px; font-family:inherit;"
+                            placeholder="Nombres de jugadores o descripción del evento..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeHistoryModal()">Cancelar</button>
+                    <button type="submit" class="btn-save">Guardar Hito</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

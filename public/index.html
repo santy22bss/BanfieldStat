@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banfield Stats - El Taladro</title>
+    <link rel="icon" href="img/banfield.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=7">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="shield">
+                <img src="img/banfield.png" class="shield-logo" alt="Escudo Banfield">
+            </span>
+            <div>
+                <h1>BANFIELD</h1>
+                <small>Gestión Deportiva</small>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="active"><i class="fas fa-futbol"></i> Partidos</a>
+            <a href="history.html"><i class="fas fa-history"></i> Historia</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar rival, técnico, estadio..."
+                    onkeyup="renderTables()">
+            </div>
+            <button class="btn-add" onclick="openModal()">
+                <i class="fas fa-plus-circle"></i> Nuevo Partido / Torneo
+            </button>
+            <button class="btn-add btn-minimal" onclick="updateAllMissingLogos()"
+                title="Buscar automáticamante escudos en Wikipedia">
+                <i class="fas fa-magic"></i> Autoset Escudos
+            </button>
+        </div>
+
+        <div id="tablesContainer"></div>
+    </div>
+
+    <!-- MODAL PARTIDO -->
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalles del Partido</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="matchForm">
+                <input type="hidden" id="matchId">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" id="inputDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Instancia</label>
+                        <select id="inputStage">
+                            <option value="Fase Regular">Fase Regular</option>
+                            <option value="Clasificacion">Clasificación</option>
+                            <option value="32avos">32avos de Final</option>
+                            <option value="16avos">16avos de Final</option>
+                            <option value="8avos">Octavos de Final</option>
+                            <option value="4tos">Cuartos de Final</option>
+                            <option value="Semis">Semifinal</option>
+                            <option value="Final">Final</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Torneo (Escribe uno nuevo para crearlo)</label>
+                        <input type="text" id="inputTourney" list="tourneySuggestions" required>
+                        <datalist id="tourneySuggestions">
+                            <option value="Liga Profesional">
+                            <option value="Copa de la Liga">
+                            <option value="Copa Argentina">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label>Equipo Local</label>
+                        <input type="text" id="inputLocal" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Equipo Visitante</label>
+                        <input type="text" id="inputVisitor" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Resultado (Ej: 2-1)</label>
+                        <input type="text" id="inputScore" placeholder="-">
+                    </div>
+                    <div class="form-group">
+                        <label>Director Técnico</label>
+                        <input type="text" id="inputCoach">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Estadio / Sede</label>
+                        <input type="text" id="inputStadium">
+                    </div>
+                    <!-- Nuevos campos para logos personalizados -->
+                    <div class="form-group">
+                        <label>Logo Local</label>
+                        <input type="text" id="inputLogoLocal" placeholder="Ej: river.png o https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Logo Visitante</label>
+                        <input type="text" id="inputLogoVisitor" placeholder="Ej: boca.png o https://...">
+                    </div>
+                    <div class="form-group full-width"
+                        style="display:flex; justify-content:flex-end; gap:15px; margin-top:20px;">
+                        <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL RENOMBRAR TORNEO -->
+    <div id="modalRename" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2>Renombrar Torneo</h2>
+                <button class="close-btn" onclick="closeRenameModal()">&times;</button>
+            </div>
+            <p style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">
+                Esto cambiará el nombre del torneo en <strong>todos</strong> los partidos asociados.
+            </p>
+            <form id="renameForm">
+                <input type="hidden" id="oldTourneyName">
+                <div class="form-group full-width">
+                    <label>Nuevo Nombre</label>
+                    <input type="text" id="newTourneyName" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeRenameModal()">Cancelar</button>
+                    <button type="submit" class="btn-save">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

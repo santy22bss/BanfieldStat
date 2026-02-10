@@ -1,0 +1,156 @@
+{
+  "competitions": [
+    {
+      "id": 1,
+      "name": "Copa Argentina 2013-14"
+    },
+    {
+      "id": 2,
+      "name": "Campeonato de Primera División 2014"
+    },
+    {
+      "id": 3,
+      "name": "Campeonato de Primera División 2015"
+    },
+    {
+      "id": 4,
+      "name": "Copa Argentina 2015"
+    },
+    {
+      "id": 5,
+      "name": "Liguilla Pre-Sudam 2015"
+    },
+    {
+      "id": 6,
+      "name": "Campeonato de Primera División 2016"
+    },
+    {
+      "id": 7,
+      "name": "Copa Argentina 2016"
+    },
+    {
+      "id": 8,
+      "name": "Copa Sudamericana 2016 - Segunda ronda"
+    },
+    {
+      "id": 9,
+      "name": "Campeonato de Primera División 2016/17"
+    },
+    {
+      "id": 10,
+      "name": "Copa Argentina 2017"
+    },
+    {
+      "id": 11,
+      "name": "Superliga 2017/18"
+    },
+    {
+      "id": 12,
+      "name": "Copa Libertadores 2018"
+    },
+    {
+      "id": 13,
+      "name": "Copa Argentina 2018"
+    },
+    {
+      "id": 14,
+      "name": "Superliga 2018/19"
+    },
+    {
+      "id": 15,
+      "name": "Copa Argentina 2019"
+    },
+    {
+      "id": 16,
+      "name": "Copa Superliga 2019"
+    },
+    {
+      "id": 17,
+      "name": "Superliga 2019/20"
+    },
+    {
+      "id": 18,
+      "name": "Copa Maradona 2020"
+    },
+    {
+      "id": 19,
+      "name": "Copa Liga 2021"
+    },
+    {
+      "id": 20,
+      "name": "Copa Argentina 2020-21"
+    },
+    {
+      "id": 21,
+      "name": "Copa DAM - Copa Sudamericana Playoff"
+    },
+    {
+      "id": 22,
+      "name": "Liga Profesional 2021"
+    },
+    {
+      "id": 23,
+      "name": "Copa Liga 2022"
+    },
+    {
+      "id": 24,
+      "name": "Copa Argentina 2022"
+    },
+    {
+      "id": 25,
+      "name": "Copa Sudamericana 2022"
+    },
+    {
+      "id": 26,
+      "name": "Liga Profesional 2022"
+    },
+    {
+      "id": 27,
+      "name": "Liga Profesional 2023"
+    },
+    {
+      "id": 28,
+      "name": "Trofeo de Campeones 2020"
+    },
+    {
+      "id": 29,
+      "name": "Copa Argentina 2023"
+    },
+    {
+      "id": 30,
+      "name": "Copa Liga 2023"
+    },
+    {
+      "id": 31,
+      "name": "Copa Argentina 2024"
+    },
+    {
+      "id": 32,
+      "name": "Liga Profesional 2024"
+    },
+    {
+      "id": 33,
+      "name": "Copa Liga 2025 (Ap)"
+    },
+    {
+      "id": 34,
+      "name": "Copa Argentina 2025"
+    },
+    {
+      "id": 35,
+      "name": "Copa Liga 2025 (Cl)"
+    },
+    {
+      "id": 36,
+      "name": "Copa Liga 2026 (Ap)"
+    },
+    {
+      "id": 37,
+      "name": "Copa Argentina 2026"
+    },
+    {
+      "id": 38,
+      "name": "Copa Liga 2026 (Cl)"
+    }
+  ]
+}
