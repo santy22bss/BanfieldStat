@@ -628,7 +628,7 @@ function renderTables() {
             const resClass = res.type;
             const isBanfieldLocal = m.local.toLowerCase().includes('banfield');
 
-            const logo = getLogoPath(teamName);
+            const logo = getLogoPath(m.local);
             const logoVisitor = getLogoPath(m.visitor);
 
             tableHTML += `
