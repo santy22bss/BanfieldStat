@@ -477,6 +477,7 @@ function renderTables() {
     const allMatchesOrdered = matches.sort((a, b) => new Date(a.date) - new Date(b.date));
     const groups = {};
     const filteredMatches = []; // Para estadísticas globales de búsqueda
+    
 
     // Agrupamiento por torneo
     allMatchesOrdered.forEach(m => {
@@ -503,6 +504,8 @@ function renderTables() {
         let globalW = 0, globalD = 0, globalL = 0, globalPts = 0;
 
         filteredMatches.forEach(m => {
+            const logoLocal = getLogoPath(m.local);
+            const logoVisitor = getLogoPath(m.visitor);
             const res = getResult(m);
             if (res.type === 'win') globalW++;
             if (res.type === 'draw') globalD++;
