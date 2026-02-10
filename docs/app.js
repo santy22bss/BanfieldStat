@@ -628,8 +628,8 @@ function renderTables() {
             const resClass = res.type;
             const isBanfieldLocal = m.local.toLowerCase().includes('banfield');
 
-            const logoLocal = getLogo(m.local, m.customLogoLocal);
-            const logoVisitor = getLogo(m.visitor, m.customLogoVisitor);
+            const logo = getLogoPath(teamName);
+            const logoVisitor = getLogoPath(m.visitor);
 
             tableHTML += `
                 <tr class="match-row ${resClass}">
